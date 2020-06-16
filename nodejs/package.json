@@ -1,0 +1,23 @@
+{
+  "name": "serial.engine",
+  "version": "0.0.1",
+  "description": "A universal serial communication engine",
+  "main": "serialengine.js",
+  "scripts": {
+    "test": "node tests/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xJeremy/serial.engine.git"
+  },
+  "keywords": [
+  ],
+  "author": "Jeremy Kanovsky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/0xJeremy/serial.engine/issues"
+  },
+  "homepage": "https://github.com/0xJeremy/serial.engine#readme",
+  "dependencies": {
+  }
+}
