@@ -10,8 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/0xJeremy/serial.engine.git"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "Jeremy Kanovsky",
   "license": "MIT",
   "bugs": {
@@ -19,5 +18,6 @@
   },
   "homepage": "https://github.com/0xJeremy/serial.engine#readme",
   "dependencies": {
+    "serialport": "9.0.0"
   }
 }

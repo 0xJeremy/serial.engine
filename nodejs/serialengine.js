@@ -1,7 +1,3 @@
-var host = require('./host.js');
-var client = require('./client.js');
-var hub = require('./hub.js');
+var connection = require('./connection.js');
 
-module.exports.host = host;
-module.exports.client = client;
-module.exports.hub = hub;
+module.exports.connection = connection;

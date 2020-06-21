@@ -34,12 +34,6 @@ class connection:
         self.serial = serial.Serial(port, baudrate=baud, timeout=self.timeout)
         self.lock = Lock()
 
-    def start(self):
-        Thread(target=self.__run, args=()).start()
-        while not self.opened:
-            pass
-        return self
-
     def __run(self):
         tmp = ""
         while True:
@@ -78,6 +72,16 @@ class connection:
     def __close(self):
         self.opened = False
         self.stopped = True
+
+    #################
+    ### INTERFACE ###
+    #################
+
+    def start(self):
+        Thread(target=self.__run, args=()).start()
+        while not self.opened:
+            pass
+        return self
 
     def get(self, channel):
         with self.lock:
