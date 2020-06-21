@@ -8,11 +8,10 @@ import serial
 ### CONSTANTS ###
 #################
 
-from .constants import ACK, NEWLINE, IMG_MSG_S, IMG_MSG_E
-from .constants import IMAGE, TYPE, DATA
-from .constants import PORT, TIMEOUT, SIZE
-from .constants import STATUS, CLOSING, NAME_CONN
-from .constants import MAX_RETRIES
+from .constants import ACK, NEWLINE, READY
+from .constants import TYPE, DATA
+from .constants import TIMEOUT, SIZE
+from .constants import STATUS, CLOSING
 from .constants import BAUD_RATE
 
 ###############################################################
@@ -37,6 +36,8 @@ class connection:
 
     def start(self):
         Thread(target=self.__run, args=()).start()
+        while not self.opened:
+            pass
         return self
 
     def __run(self):
@@ -46,9 +47,9 @@ class connection:
                 self.serial.close()
                 return
 
-            tmp += self.serial.readline(self.size).decode()
+            tmp += self.serial.read(self.size).decode()
 
-            if tmp == "READY":
+            if tmp == READY:
                 self.opened = True
                 tmp = ""
 
@@ -72,10 +73,6 @@ class connection:
         if mtype == STATUS:
             if mdata == CLOSING:
                 self.__close()
-        if mtype == NAME_CONN:
-            self.name = mdata
-        if mtype == IMAGE:
-            self.write(ACK, ACK)
         return
 
     def __close(self):
