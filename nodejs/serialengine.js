@@ -1,3 +1,1 @@
-var connection = require('./connection.js');
-
-module.exports.connection = connection;
+module.exports.connection = require('./src').connection;
