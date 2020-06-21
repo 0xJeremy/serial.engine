@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="https://raw.githubusercontent.com/0xJeremy/serial.engine/master/graphics/Logo.png">
+</div>
+
 ## Installation
 
 [Python](https://pypi.org/project/serial.engine/):
