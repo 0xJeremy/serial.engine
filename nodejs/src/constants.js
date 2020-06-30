@@ -10,7 +10,7 @@ var data = {
 	DATA    : 'data',
 
 	////////////////////////
-	/// SOCKET CONSTANTS ///
+	/// SERIAL CONSTANTS ///
 	////////////////////////
 
 	SIZE        : 128,

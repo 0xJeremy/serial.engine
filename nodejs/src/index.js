@@ -1,3 +1,3 @@
-var connection = require('./connection.js');
+var transport = require('./transport.js');
 
-module.exports.connection = connection;
+module.exports.Transport = Transport;

@@ -20,7 +20,7 @@ const { READY } = require('./constants');
 /// CONNECTION CLASS ///
 ////////////////////////
 
-function connection(port, baud, timeout=TIMEOUT, size=SIZE) {
+function Transport(port, baud, timeout=TIMEOUT, size=SIZE) {
 	EventEmitter.call(this);
 	this.port = port;
 	this.baud = baud;
@@ -122,6 +122,6 @@ function connection(port, baud, timeout=TIMEOUT, size=SIZE) {
 
 }
 
-inherits(connection, EventEmitter);
+inherits(Transport, EventEmitter);
 
-module.exports = exports = connection;
+module.exports = exports = Transport;

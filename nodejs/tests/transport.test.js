@@ -1,7 +1,7 @@
 'use strict'
 
 const assertion = require('assert');
-const connection = require('../connection');
+const Transport = require('../transport');
 
 const DEBUG = false;
 const DELAY = 1000;
@@ -56,8 +56,8 @@ Luckily friends do ashamed to do suppose. Tried meant mr smile so. Exquisite beh
 /// UNIT TESTS ///
 //////////////////
 
-async function test_connection_setup() {
-	const conn = new connection('/dev/ttyACM0', 2000000);
+async function test_transport_setup() {
+	const conn = new Transport('/dev/ttyACM0', 2000000);
 	await conn.start();
 	assert(conn.opened, true);
 	conn.on('test', (data) => {
@@ -69,7 +69,7 @@ async function test_connection_setup() {
 
 
 async function main() {
-	var routines = [test_connection_setup];
+	var routines = [test_transport_setup];
 	for(var i = 0; i < routines.length; i++) {
 		await routines[i]();
 	}

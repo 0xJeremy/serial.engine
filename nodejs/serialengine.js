@@ -1,1 +1,1 @@
-module.exports.connection = require('./src').connection;
+module.exports.Transport = require('./src').Transport;

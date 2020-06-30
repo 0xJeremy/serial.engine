@@ -9,7 +9,7 @@ SCRIPT_DIR = os.path.dirname(
 )
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
-from serialengine.connection import connection
+from serialengine import Transport
 import time
 import argparse
 
@@ -39,34 +39,27 @@ def success(text):
     s(1)
 
 
-text = "Consulted he eagerness unfeeling deficient existence of. Calling nothing end fertile for venture way boy. Esteem spirit temper too say adieus who direct esteem. It esteems luckily mr or picture placing drawing no. Apartments frequently or motionless on reasonable projecting expression. Way mrs end gave tall walk fact bed. \
-Left till here away at to whom past. Feelings laughing at no wondered repeated provided finished. It acceptance thoroughly my advantages everything as. Are projecting inquietude affronting preference saw who. Marry of am do avoid ample as. Old disposal followed she ignorant desirous two has. Called played entire roused though for one too. He into walk roof made tall cold he. Feelings way likewise addition wandered contempt bed indulged. \
-Same an quit most an. Admitting an mr disposing sportsmen. Tried on cause no spoil arise plate. Longer ladies valley get esteem use led six. Middletons resolution advantages expression themselves partiality so me at. West none hope if sing oh sent tell is. \
-Death weeks early had their and folly timed put. Hearted forbade on an village ye in fifteen. Age attended betrayed her man raptures laughter. Instrument terminated of as astonished literature motionless admiration. The affection are determine how performed intention discourse but. On merits on so valley indeed assure of. Has add particular boisterous uncommonly are. Early wrong as so manor match. Him necessary shameless discovery consulted one but. \
-Yet remarkably appearance get him his projection. Diverted endeavor bed peculiar men the not desirous. Acuteness abilities ask can offending furnished fulfilled sex. Warrant fifteen exposed ye at mistake. Blush since so in noisy still built up an again. As young ye hopes no he place means. Partiality diminution gay yet entreaties admiration. In mr it he mention perhaps attempt pointed suppose. Unknown ye chamber of warrant of norland arrived. \
-Luckily friends do ashamed to do suppose. Tried meant mr smile so. Exquisite behaviour as to middleton perfectly. Chicken no wishing waiting am. Say concerns dwelling graceful six humoured. Whether mr up savings talking an. Active mutual nor father mother exeter change six did all. "
-
 ##################
 ### UNIT TESTS ###
 ##################
 
 
-def test_connection_setup():
+def test_transport_setup():
     start = time.time()
-    conn = connection(PORT, baud=BAUDRATE, timeout=TIMEOUT).start()
-    report("Connection created and started")
+    conn = Transport(PORT, baud=BAUDRATE, timeout=TIMEOUT).start()
+    report("Transport created and started")
     assert conn.opened
     assert not conn.stopped
     conn.close()
     assert not conn.opened
     assert conn.stopped
-    success("Connection Setup Test Passed ({:.5f} sec)".format(time.time() - start))
+    success("Transport Setup Test Passed ({:.5f} sec)".format(time.time() - start))
 
 
 def test_message_bounce():
     start = time.time()
-    conn = connection(PORT, baud=BAUDRATE, timeout=TIMEOUT).start()
-    report("Connection created and started")
+    conn = Transport(PORT, baud=BAUDRATE, timeout=TIMEOUT).start()
+    report("Transport created and started")
     assert conn.get("Test") == None
     conn.write("Test", "Test")
     while conn.get("Test") == None:
@@ -78,8 +71,8 @@ def test_message_bounce():
 
 def test_multiple_messages():
     start = time.time()
-    conn = connection(PORT, baud=BAUDRATE, timeout=TIMEOUT).start()
-    report("Connection created and started")
+    conn = Transport(PORT, baud=BAUDRATE, timeout=TIMEOUT).start()
+    report("Transport created and started")
     assert conn.get("Test") == None
     conn.write("Test", "Test")
     while conn.get("Test") == None:
@@ -98,16 +91,18 @@ def test_multiple_messages():
 
 def test_multi_channel(num=10):
     start = time.time()
-    conn = connection(PORT, baud=BAUDRATE, timeout=TIMEOUT).start()
-    report("Connection created and started")
+    conn = Transport(PORT, baud=BAUDRATE, timeout=TIMEOUT).start()
+    report("Transport created and started")
     for i in range(num):
         msg = "test{}".format(i)
         conn.write(msg, msg)
+        report("Writing test {}".format(i))
     while conn.get("test{}".format(num - 1)) == None:
         pass
     for i in range(num):
         msg = "test{}".format(i)
         assert conn.get(msg) == msg
+        report("Reading test {}".format(i))
     conn.close()
     success("Multi-Channel Test Passed ({:.5f} sec)".format(time.time() - start))
 
@@ -126,7 +121,7 @@ def main(args):
     if args.port:
         PORT = args.port
     routines = [
-        test_connection_setup,
+        test_transport_setup,
         test_message_bounce,
         test_multiple_messages,
         test_multi_channel,

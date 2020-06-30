@@ -21,8 +21,9 @@ from .constants import BAUD_RATE
 ########################
 
 
-class connection:
-    def __init__(self, port, baud=BAUD_RATE, timeout=TIMEOUT, size=SIZE):
+class Transport:
+    def __init__(self, port, baud=BAUD_RATE, timeout=TIMEOUT, size=SIZE, name=None):
+        self.name = name
         self.canWrite = True
         self.channels = {}
         self.size = size
